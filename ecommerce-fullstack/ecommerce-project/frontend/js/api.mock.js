@@ -13,12 +13,17 @@ function load(key, fallback) {                                           // read
   catch (e) { localStorage.removeItem(key); return fallback; }
 }
 function save(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
-function seedOnce() {                                                    // seed mock data on first load only
+// Remove existing saved products and flag so it loads the new photos
+localStorage.removeItem("ec_products");
+localStorage.removeItem("ec_seeded");
+
+function seedOnce() {
   if (localStorage.getItem("ec_seeded")) return;
   save(KEYS.users, MOCK_USERS); save(KEYS.products, MOCK_PRODUCTS); save(KEYS.orders, MOCK_ORDERS); save(KEYS.cart, []);
   localStorage.setItem("ec_seeded", "1");
 }
 seedOnce();
+
 const list = (key) => { const v = load(key, []); return Array.isArray(v) ? v : []; };
 const safeUser = (u) => { const { password, ...rest } = u; return rest; };  // never expose password
 const sessionUser = () => { const s = load(KEYS.session, null); return s && s.user ? s.user : null; };
