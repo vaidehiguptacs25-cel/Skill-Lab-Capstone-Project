@@ -1,0 +1,132 @@
+/* layout.css - navbar, footer, containers, grids, breakpoints (mobile-first) */
+
+/* Containers & Base Layout */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--sp-2);
+}
+
+main {
+  min-height: 70vh;
+  padding: var(--sp-3) var(--sp-2);
+}
+
+/* Header & Navigation */
+
+.site-header {
+  background: #fff;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.nav-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--sp-1);
+  padding-bottom: var(--sp-1);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.hamburger {
+  background: none;
+  border: 0;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.nav {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--sp-1);
+  padding: var(--sp-1) 0;
+}
+
+.nav.open {
+  display: flex;
+}
+
+.nav a.active {
+  font-weight: 700;
+  border-bottom: 2px solid var(--accent);
+}
+
+.badge-count {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 99px;
+  padding: 0 .45rem;
+  font-size: .75rem;
+}
+
+/* Footer */
+
+.site-footer {
+  background: var(--gray-900);
+  color: #fff;
+  text-align: center;
+  padding: var(--sp-3);
+}
+
+/* Grid System (Base / Mobile) */
+
+.grid {
+  display: grid;
+  gap: var(--sp-2);
+  grid-template-columns: 1fr;
+}
+
+/* Responsive Breakpoints */
+
+@media (min-width: 576px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .hamburger {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    align-items: center;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--sp-3);
+  }
+}
+
+@media (min-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  main {
+    padding: var(--sp-3);
+  }
+}

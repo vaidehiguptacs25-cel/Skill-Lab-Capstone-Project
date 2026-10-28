@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products - ShopEasy</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body data-root="../">
+  <div id="site-header"></div>
+
+  <main class="container">
+    <h1>Products</h1>
+
+    <form id="filters" class="filters" role="search">
+      <div>
+        <label class="sr-only" for="search">Search</label>
+        <input id="search" name="search" type="search" placeholder="Search products">
+      </div>
+
+      <div>
+        <label class="sr-only" for="category">Category</label>
+        <select id="category" name="category"></select>
+      </div>
+
+      <div>
+        <label class="sr-only" for="minPrice">Min price</label>
+        <input id="minPrice" name="minPrice" type="number" min="0" placeholder="Min ₹">
+      </div>
+
+      <div>
+        <label class="sr-only" for="maxPrice">Max price</label>
+        <input id="maxPrice" name="maxPrice" type="number" min="0" placeholder="Max ₹">
+      </div>
+
+      <div>
+        <label class="sr-only" for="sort">Sort</label>
+        <select id="sort" name="sort">
+          <option value="">Sort by</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="price-desc">Price: high to low</option>
+          <option value="rating">Rating</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+
+      <button type="button" class="btn btn-secondary" id="clearBtn">Clear filters</button>
+    </form>
+
+    <div class="grid" id="productGrid"></div>
+    <div class="pager" id="pager"></div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/products.js"></script>
+</body>
+</html>

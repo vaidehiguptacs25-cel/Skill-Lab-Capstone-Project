@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - ShopEasy</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body data-root="../">
+  <div id="site-header"></div>
+
+  <main class="container">
+    <section class="auth-box panel">
+      <h1>My Profile</h1>
+
+      <form id="profileForm" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" data-rules="required">
+          <span class="error" role="alert"></span>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" disabled>
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" data-rules="required phone">
+          <span class="error" role="alert"></span>
+        </div>
+
+        <div class="field">
+          <label for="address">Address</label>
+          <input id="address" name="address" type="text" data-rules="required">
+          <span class="error" role="alert"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </form>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/orders.js"></script>
+</body>
+</html>

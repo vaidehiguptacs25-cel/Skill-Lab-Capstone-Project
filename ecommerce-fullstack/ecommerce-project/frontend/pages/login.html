@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - ShopEasy</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body data-root="../">
+  <div id="site-header"></div>
+
+  <main class="container">
+    <section class="auth-box panel">
+      <h1>Login</h1>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" data-rules="required email">
+          <span class="error" role="alert"></span>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" data-rules="required">
+          <button type="button" class="btn btn-secondary" data-toggle="password" aria-label="Show or hide password">Show</button>
+          <span class="error" role="alert"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+
+      <p>New here? <a href="register.html">Create an account</a></p>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>

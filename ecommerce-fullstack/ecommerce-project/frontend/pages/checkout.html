@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - ShopEasy</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body data-root="../">
+  <div id="site-header"></div>
+
+  <main class="container">
+    <div id="checkoutArea">
+      <h1>Checkout</h1>
+
+      <div class="two-col">
+        <form id="checkoutForm" class="panel" novalidate>
+          <h2>Shipping address</h2>
+
+          <div class="field">
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" type="text" data-rules="required">
+            <span class="error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" data-rules="required phone">
+            <span class="error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="address">Address</label>
+            <input id="address" name="address" type="text" data-rules="required">
+            <span class="error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="city">City</label>
+            <input id="city" name="city" type="text" data-rules="required">
+            <span class="error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="state">State</label>
+            <input id="state" name="state" type="text" data-rules="required">
+            <span class="error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="pincode">Pincode</label>
+            <input id="pincode" name="pincode" type="text" data-rules="required pincode">
+            <span class="error" role="alert"></span>
+          </div>
+
+          <fieldset class="field">
+            <legend>Payment method</legend>
+            <label>
+              <input type="radio" name="payment" value="Cash on Delivery" checked> Cash on Delivery
+            </label>
+            <br>
+            <label>
+              <input type="radio" name="payment" value="Card / UPI (demo)"> Card / UPI (demo only)
+            </label>
+            <p>No card data is collected. Stripe/PayPal may be added later.</p>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+
+        <aside class="panel" id="totals"></aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/cart.js"></script>
+</body>
+</html>

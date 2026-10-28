@@ -1,0 +1,170 @@
+/* pages.css - page-specific styles */
+
+/* Product Cards */
+
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: .2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: var(--sp-2);
+  display: grid;
+  gap: .4rem;
+}
+
+.price {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+s {
+  color: var(--gray-600);
+}
+
+/* Hero & Promotion Sections */
+
+.hero {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  padding: var(--sp-4) var(--sp-2);
+  border-radius: var(--radius);
+  margin-bottom: var(--sp-3);
+}
+
+.cat-card {
+  background: #fff;
+  padding: var(--sp-3);
+  text-align: center;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-weight: 600;
+}
+
+.promo {
+  display: grid;
+  gap: var(--sp-2);
+  margin: var(--sp-3) 0;
+  text-align: center;
+}
+
+/* Panels & Filters */
+
+.panel {
+  background: #fff;
+  padding: var(--sp-3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: var(--sp-2);
+}
+
+.filters {
+  display: grid;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-2);
+}
+
+/* Cart */
+
+.cart-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: var(--sp-1);
+  align-items: center;
+  border-bottom: 1px solid var(--gray-300);
+  padding: var(--sp-1) 0;
+}
+
+.cart-row img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.qty {
+  display: inline-flex;
+  gap: .4rem;
+  align-items: center;
+}
+
+/* Pagination */
+
+.pager {
+  display: flex;
+  gap: .4rem;
+  justify-content: center;
+  margin-top: var(--sp-2);
+}
+
+/* Product Detail & Auth */
+
+.detail {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.auth-box {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.empty {
+  text-align: center;
+  padding: var(--sp-4);
+  color: var(--gray-600);
+}
+
+/* Stats & Dashboard */
+
+.cards {
+  display: grid;
+  gap: var(--sp-2);
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: var(--sp-3);
+}
+
+.stat {
+  background: #fff;
+  padding: var(--sp-2);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.stat strong {
+  display: block;
+  font-size: 1.5rem;
+}
+
+/* Responsive Breakpoints */
+
+@media (min-width: 768px) {
+  .promo {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .filters {
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+  }
+
+  .detail {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
