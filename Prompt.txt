@@ -1,0 +1,180 @@
+ROLE
+You are a senior front-end developer and mentor. Build PART 1 of a college full-stack capstone project: the complete FRONTEND of an E-Commerce Platform using only HTML, CSS and vanilla JavaScript. It must run on a local server (VS Code Live Server) with NO backend. Data comes from mock data and localStorage. In a later phase, a Node.js + Express + MongoDB backend will replace the mock data, so the code must be structured to make that swap easy.
+
+PROJECT CONTEXT
+- Project: E-Commerce Platform (like Amazon/Flipkart, simplified)
+- Roles: Customer, Seller/Admin
+- Final stack (later): Node.js, Express, MongoDB, JWT auth. Do NOT build any of that now.
+- This is for a student team, so code must be readable, well commented, consistently named, and beginner-friendly. No clever tricks.
+
+STRICT TECH RULES
+1. Only HTML5, CSS3, and vanilla JavaScript (ES6+). No React, Angular, Vue, jQuery, Tailwind, or build tools.
+2. No npm, no bundler, no backend. Must work by opening with Live Server.
+3. Use CSS Flexbox and CSS Grid for layout. Use CSS variables for colors, spacing and fonts.
+4. Use plain <script> tags. Do NOT use ES module import/export, so it works everywhere. Load scripts in the correct order on each page (mockData.js, then api.js, then main.js, then the page script).
+5. No inline styles and no inline onclick attributes. Attach events in JS with addEventListener.
+6. Use semantic HTML (header, nav, main, section, footer, form, label).
+7. Images: use placeholder image URLs (e.g. https://picsum.photos or similar) or local files in assets/images, with alt text on every image and a fallback if an image fails to load.
+
+FOLDER STRUCTURE (create exactly this)
+ecommerce-project/
+├── frontend/
+│   ├── index.html
+│   ├── pages/
+│   │   ├── products.html
+│   │   ├── product-detail.html
+│   │   ├── cart.html
+│   │   ├── checkout.html
+│   │   ├── login.html
+│   │   ├── register.html
+│   │   ├── profile.html
+│   │   ├── orders.html
+│   │   └── admin-dashboard.html
+│   ├── css/
+│   │   ├── base.css       (reset, CSS variables, typography, buttons, forms)
+│   │   ├── layout.css     (navbar, footer, containers, grid system, responsive breakpoints)
+│   │   └── pages.css      (page-specific styles)
+│   ├── js/
+│   │   ├── mockData.js    (fake products, categories, users, orders)
+│   │   ├── api.js         (ALL data access lives here)
+│   │   ├── main.js        (shared: navbar rendering, auth state, cart badge, toast messages)
+│   │   ├── products.js    (listing, search, filter, sort, product detail)
+│   │   ├── cart.js        (cart and checkout logic)
+│   │   ├── auth.js        (login, register, logout, validation)
+│   │   ├── orders.js      (order history, profile)
+│   │   └── admin.js       (seller/admin product CRUD UI)
+│   └── assets/
+│       ├── images/
+│       └── icons/
+├── .gitignore             (node_modules, .env, .DS_Store)
+└── README.md              (how to run the frontend)
+
+THE MOST IMPORTANT ARCHITECTURE RULE: api.js
+- No page script may read mockData.js or localStorage directly for application data. Every data operation goes through functions in api.js.
+- Every api.js function must be ASYNC and return a Promise (use async/await with a short fake delay, e.g. 300ms, to simulate network). Return data in the same shape a real REST API would: { success: true, data: ... } or { success: false, message: "..." }.
+- Name the functions after the future endpoints, and put the future endpoint in a comment above each one. Example comment: // Future: GET /api/products
+- Required functions:
+  Auth: registerUser(data), loginUser(email, password), logoutUser(), getCurrentUser()
+  Products: getProducts({search, category, minPrice, maxPrice, sort, page}), getProductById(id), createProduct(data), updateProduct(id, data), deleteProduct(id)
+  Categories: getCategories()
+  Cart: getCart(), addToCart(productId, qty), updateCartItem(productId, qty), removeFromCart(productId), clearCart()
+  Orders: placeOrder(orderData), getMyOrders(), getAllOrders() (admin)
+  Profile: updateProfile(data)
+- Persistence for mock mode: store users, cart, orders, current user and fake token in localStorage under clearly named keys (e.g. "ec_users", "ec_cart", "ec_orders", "ec_session"). Seed mockData into localStorage on first load only.
+- Put a single constant at the top of api.js: const USE_MOCK = true; and a BASE_URL = "http://localhost:5000/api"; placeholder, so in Part 3 only this file changes.
+- Passwords in mock mode are only for demo; add a comment that real hashing happens in the backend later.
+
+MOCK DATA (mockData.js)
+- 6 categories (e.g. Electronics, Fashion, Books, Home, Sports, Beauty).
+- 16 to 20 products. Each: id, name, description, price, discountPrice (optional), category, image, stock, rating, reviewsCount, sellerId, createdAt.
+- 3 users: 1 admin/seller, 2 customers. Each: id, name, email, password, role, phone, address.
+- 3 sample orders for a customer, with items, total, status (Pending, Shipped, Delivered, Cancelled), date, shipping address.
+- Use field names that will map directly to MongoDB later (use "_id"-style thinking: keep an id field, camelCase names).
+
+PAGES AND FEATURES (build all)
+
+1. Shared navbar and footer (all pages)
+   - Logo, Home, Products, search bar, Cart with item-count badge, Login/Register OR user menu (Profile, My Orders, Logout; plus Dashboard link if role is admin).
+   - Rendered/updated by main.js so each HTML page only needs a placeholder container. Highlight the active page link.
+   - Mobile: hamburger menu that toggles the nav.
+   - A reusable toast/notification function showToast(message, type) for success/error messages.
+
+2. Home (index.html)
+   - Hero banner with call-to-action, category cards, "Featured Products" and "New Arrivals" sections (from api.js), and a simple promo strip (free delivery, easy returns, secure payment).
+
+3. Products (products.html)
+   - Grid of product cards (image, name, price, discount price, rating, Add to Cart button).
+   - Search bar (live filtering with a short debounce), category filter, price range filter, sort (price low-high, high-low, rating, newest), and a "Clear filters" button.
+   - Pagination or "Load more" (8 per page).
+   - Loading state, and an "No products found" empty state.
+   - Filters reflected in the URL query string (e.g. ?category=Books&search=pen) so links from Home categories work.
+
+4. Product Detail (product-detail.html?id=...)
+   - Large image, name, price, discount, rating, stock status, quantity selector (min 1, max = stock), Add to Cart and Buy Now buttons, description, and a "Related Products" row from the same category.
+   - Handle invalid/missing id with a friendly message.
+
+5. Cart (cart.html)
+   - List of items with image, name, price, quantity +/- controls, remove button, line total.
+   - Order summary: subtotal, delivery fee (free above a threshold), tax (e.g. 5%), grand total.
+   - Empty cart state, "Continue shopping", and "Proceed to Checkout" (requires login; redirect to login if not logged in, then return to the cart).
+
+6. Checkout (checkout.html) - login required
+   - Shipping address form (full name, phone, address, city, state, pincode).
+   - Payment method radio options: Cash on Delivery, and "Card / UPI (demo only)". Do NOT collect real card data. Add a note that Stripe/PayPal is an optional later extension.
+   - Order summary side panel, "Place Order" button, then a success confirmation view showing the order id.
+   - Clears the cart after success.
+
+7. Login (login.html) and Register (register.html)
+   - Fields: register has name, email, phone, password, confirm password, and role select (Customer / Seller); login has email and password.
+   - Show/hide password toggle.
+   - On login success, store the session and redirect (admin goes to dashboard, customer goes to the page they came from or home).
+   - Prevent logged-in users from seeing the login/register pages (redirect them).
+
+8. Profile (profile.html) - login required
+   - View and edit name, phone, address. Save through updateProfile(). Show success toast.
+
+9. Orders (orders.html) - login required
+   - List of the user's orders: order id, date, status badge (color-coded), total, and an expandable items list. Empty state.
+
+10. Admin Dashboard (admin-dashboard.html) - admin/seller only
+   - Summary cards: total products, total orders, total revenue, low-stock count.
+   - Products table with Add, Edit, Delete (full CRUD through api.js), using a modal or inline form with validation. Confirm before deleting.
+   - Orders table with status shown (and ability to update the status in mock mode).
+   - Non-admin users are redirected away with a message.
+
+ROUTE PROTECTION
+- Write a helper in main.js: requireLogin() and requireRole(role). Call it at the top of protected pages. Unauthenticated users go to login.html with a redirect parameter.
+
+FORM VALIDATION (client side, required on every form)
+- Validate on submit AND on blur. Show a clear red error message under each invalid field, a green state for valid, and disable double-submission.
+- Rules: required fields, email format, phone (10 digits), password min 8 characters with at least one letter and one number, confirm password match, pincode (6 digits), price > 0, stock >= 0 and integer, quantity within allowed range.
+- Create a reusable validation helper (in main.js or a small section of auth.js) so rules are not copy-pasted.
+- Use error messages that tell the user exactly what is wrong.
+
+ERROR AND EDGE-CASE HANDLING
+- Wrap api calls in try/catch. Show friendly messages with showToast, never raw errors or blank screens.
+- Handle: empty states, out-of-stock products (disable Add to Cart), quantity above stock, corrupted localStorage (reset safely), missing image (fallback), invalid URL params.
+- Escape/sanitize any user-entered text before inserting into the DOM (use textContent or an escape helper; avoid innerHTML with raw user input).
+
+DESIGN AND RESPONSIVENESS
+- Mobile-first. Breakpoints around 576px, 768px, 992px, 1200px.
+- Product grid: 1 column on phones, 2 on small tablets, 3 on tablets, 4 on desktop.
+- Pick a clean modern design system: one primary color, one accent, neutral grays, defined in CSS variables; consistent spacing scale, border radius, soft shadows, hover states, focus outlines, smooth transitions.
+- Buttons (primary, secondary, danger, disabled), badges, cards, forms, tables (scrollable on mobile), modal, and toast all styled consistently in base.css.
+- Accessible: labels linked to inputs, sufficient contrast, keyboard-navigable, aria-labels on icon buttons, visible focus state.
+
+CODE QUALITY RULES
+- Consistent naming: camelCase in JS, kebab-case for CSS classes and file names.
+- Every JS file starts with a header comment explaining its purpose. Every function has a one-line comment.
+- No duplicated logic; shared helpers live in main.js.
+- No global variable chaos: wrap each page script in an IIFE or a DOMContentLoaded handler, and share only what is needed.
+- Use const/let, never var. No console.log left in the final code.
+- Relative paths must work from both frontend/ and frontend/pages/ (be careful with ../ in links, scripts and images).
+
+GIT REQUIREMENTS
+- Initialize the work so it can be committed in logical steps. In your final answer, give me a suggested list of at least 8 meaningful commit messages in order (e.g. "Add base styles and CSS variables", "Create shared navbar and footer", "Build products page with search and filters", ...), and a suggested feature-branch name for each major piece (feature/navbar, feature/products-page, feature/cart, feature/auth-ui, feature/admin-dashboard).
+
+HOW TO DELIVER
+Work in this order and deliver it in batches. After each batch, stop and wait for me to say "next":
+  Batch 1: folder structure, .gitignore, base.css, layout.css, mockData.js, api.js
+  Batch 2: main.js (navbar, footer, toast, validation helpers, route protection) and index.html
+  Batch 3: products.html, product-detail.html and products.js
+  Batch 4: cart.html, checkout.html and cart.js
+  Batch 5: login.html, register.html, profile.html, orders.html, auth.js, orders.js
+  Batch 6: admin-dashboard.html, admin.js, pages.css finishing touches, README.md, commit plan
+For each file, give the full file path as a heading, then the complete code (no "rest of the code here" shortcuts, no placeholders).
+
+DEFINITION OF DONE (verify and list at the end)
+[ ] Every page loads with no console errors on Live Server
+[ ] Fully responsive from 320px to 1440px
+[ ] Search, filter, sort and pagination work
+[ ] Cart persists after refresh; totals are correct
+[ ] Register, login, logout work; protected pages redirect properly
+[ ] Checkout creates an order that appears in Orders
+[ ] Admin can add, edit and delete products
+[ ] All forms show proper validation messages
+[ ] No page touches mockData or localStorage directly; everything goes through api.js
+[ ] README explains how to run the project
+[ ] Test accounts are listed in the README (1 admin, 1 customer)
+
+Before writing any code, restate your understanding of the plan in 5 to 8 lines and list any assumptions you are making. Then begin Batch 1.
